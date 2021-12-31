@@ -1,0 +1,28 @@
+version: "3"
+
+services:
+  registry:
+    image: registry:2
+    container_name: registry
+    restart: always
+    ports:
+      - 443:443
+    environment:
+      REGISTRY_HTTP_ADDR: 0.0.0.0:443
+      REGISTRY_HTTP_TLS_CERTIFICATE: /certs/domain.crt
+      REGISTRY_HTTP_TLS_KEY: /certs/domain.key
+      REGISTRY_AUTH: htpasswd
+      REGISTRY_AUTH_HTPASSWD_PATH: /auth/htpasswd
+      REGISTRY_AUTH_HTPASSWD_REALM: basic-realm
+    volumes:
+      - "./data/registry:/var/lib/registry"
+      - "./data/certbot/conf:/certs"
+      - "./auth:/auth"
+
+  certbot:
+    image: certbot/certbot
+    restart: always
+    volumes:
+      - "./data/certbot/conf:/etc/letsencrypt"
+      - "./data/certbot/www:/var/www/certbot"
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
