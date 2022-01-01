@@ -1,3 +1,5 @@
+set dotenv-load := false
+
 REGISTRY_USER := "test"
 REGISTRY_PASSWD := "password"
 
