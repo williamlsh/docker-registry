@@ -16,7 +16,8 @@ services:
       REGISTRY_AUTH_HTPASSWD_REALM: basic-realm
     volumes:
       - "./data/registry:/var/lib/registry"
-      - "./data/certbot/conf:/certs"
+      - "./data/certbot/conf/live/${DOMAIN:?err}/privkey.pem:/certs/domain.key"
+      - "./data/certbot/conf/live/${DOMAIN:?err}/fullchain.pem:/certs/domain.crt"
       - "./auth:/auth"
 
   certbot:
