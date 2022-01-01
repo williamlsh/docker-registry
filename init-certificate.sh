@@ -35,5 +35,4 @@ docker-compose run -p 80:80 --rm --entrypoint "\
     --register-unsafely-without-email \
     $domain_args \
     --agree-tos \
-    --force-renewal && \
-    ln -fs /etc/letsencrypt/live/$domains/ /etc/letsencrypt/active\"" certbot
+    --force-renewal\"" certbot
