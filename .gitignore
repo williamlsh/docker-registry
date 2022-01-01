@@ -1,3 +1,4 @@
 /data
 /auth
 /certs
+.env
